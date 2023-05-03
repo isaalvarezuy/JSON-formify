@@ -6,14 +6,21 @@ interface Props {
   label?: string;
   error?: string;
   message?: string;
+  required?: boolean;
 }
-const InputWrapper = ({ children, label, error, message }: Props) => {
+const InputWrapper = ({
+  children,
+  label,
+  error,
+  message,
+  required = false,
+}: Props) => {
   return (
     <div className="flex flex-col items-start gap-1">
       {label && (
         <label>
           <Paragraph size={14} weight="medium" color="text-gray-700">
-            {label}
+            {`${label} ${required && "*"}`}
           </Paragraph>
         </label>
       )}

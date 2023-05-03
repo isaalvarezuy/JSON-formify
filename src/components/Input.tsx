@@ -1,24 +1,21 @@
 import { ComponentPropsWithoutRef, ForwardedRef, forwardRef } from "react";
-import InputWrapper from "./InputWrapper";
-import { FieldObj, FormErrorType } from "./types/types";
 import classnames from "classnames";
+import { InputFieldObj } from "./types/types";
+import InputWrapper from "./InputWrapper";
 
 const Input = forwardRef(
   (
-    {
-      error,
-      ...rest
-    }: ComponentPropsWithoutRef<"input"> &
-      FieldObj & { error: { error?: FormErrorType } },
+    { error, ...rest }: ComponentPropsWithoutRef<"input"> & InputFieldObj,
     ref: ForwardedRef<HTMLInputElement>
   ) => {
-    console.log(rest.required);
     const errorMessage = error && typeof error === "string" && error;
+    const required = rest.validations?.includes("required");
     return (
       <InputWrapper
         label={rest.label}
         message={rest.message}
         error={errorMessage || ""}
+        required={required}
       >
         <input
           ref={ref}

@@ -16,9 +16,16 @@ const NewForm = () => {
         label: "Name",
         message: "please select a name",
         id: "1",
-        validations: ["required"],
+        validations: ["required", "min10"],
       },
-      /*       country: {
+      password: {
+        type: "input",
+        label: "Password",
+        message: "please select a password",
+        id: "1",
+        validations: ["required", "password"],
+      },
+      country: {
         type: "select",
         label: "Country",
         message: "countries are what we use to divide the earth",
@@ -28,7 +35,7 @@ const NewForm = () => {
           { value: "1", label: "Option1" },
           { value: "2", label: "Option2" },
         ],
-      }, */
+      },
       email: {
         type: "input",
         label: "Email",
@@ -43,8 +50,6 @@ const NewForm = () => {
   };
 
   const jsonEntries = Object.entries(defaultFormObj.fields);
-  console.log(defaultFormObj);
-  console.log(jsonEntries);
 
   const renderField = ({
     fieldName,
@@ -61,7 +66,6 @@ const NewForm = () => {
       [k: string]: string;
     }>;
   }) => {
-    console.log(fieldObj);
     if (fieldObj.type === "input") {
       return (
         <Input
@@ -103,6 +107,11 @@ const NewForm = () => {
                 message: validationMsg || "Field is required",
               });
             }
+            if (validationType === "min10") {
+              return schema.min(10, {
+                message: validationMsg || "Min length is 10",
+              });
+            }
 
             if (validationType === "email") {
               return schema.email({
@@ -124,7 +133,6 @@ const NewForm = () => {
         return [fieldName, fieldSchema] as const;
       });
 
-    console.log(fieldSchemasKV, "schema");
     return z.object(Object.fromEntries(fieldSchemasKV));
   };
 

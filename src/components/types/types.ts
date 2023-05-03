@@ -7,7 +7,7 @@ type FilterConditionally<Source, Condition> = Pick<
   }[keyof Source]
 >;
 
-type ValidationType = "required" | "email" | "password";
+type ValidationType = "required" | "email" | "password" | "min10";
 
 type Validation =
   | ValidationType
@@ -45,12 +45,36 @@ type JSONableInputProps = FilterConditionally<
   JSONValue | undefined
 >;
 
-type InputFieldObj = JSONableInputProps & {
+export type InputFieldObj = JSONableInputProps & {
   type: "input";
   validations?: Validation[];
 };
 
-export type FieldObj = InputFieldObj;
+export interface SelectProps<
+  TOptionsValue extends string = string,
+  TValue extends TOptionsValue = TOptionsValue
+> extends ComponentPropsWithoutRef<"select"> {
+  options: { value: TOptionsValue; label: string }[];
+  id: string;
+  label?: string;
+  value?: TValue;
+  message?: string;
+  error?: FormErrorType;
+}
+
+type SelectOptions = SelectProps["options"];
+
+type JSONableSelectProps = FilterConditionally<
+  SelectProps,
+  JSONValue | undefined
+>;
+
+export type SelectFieldObj = JSONableSelectProps & {
+  type: "select";
+  validations?: Validation[];
+  options: SelectOptions;
+};
+export type FieldObj = InputFieldObj | SelectFieldObj;
 
 export type FormObj = {
   title: string;
