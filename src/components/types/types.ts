@@ -21,13 +21,14 @@ export type FormErrorType = string | boolean;
 interface InputProps extends ComponentPropsWithoutRef<"input"> {
   id: string;
   label: string;
-  containerClassName?: string;
   message?: string;
-  compact?: boolean;
   error?: FormErrorType;
-  left?: ReactNode;
-  right?: ReactNode;
-  rightWidth?: number;
+}
+interface InputProps extends ComponentPropsWithoutRef<"input"> {
+  id: string;
+  label: string;
+  message?: string;
+  error?: FormErrorType;
 }
 
 type JSONValue =

@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import Input from "./Input";
 import Select from "./Select";
+import Checkbox from "./Checkbox";
 
 const Form = () => {
   const {
@@ -17,8 +18,9 @@ const Form = () => {
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4">
       {/* register your input into the hook by invoking the "register" function */}
-      <Input {...register("field")} />
-      <Select {...register("gender")} />
+      {/*      <Input {...register("field")} />
+      <Select {...register("gender")} /> */}
+      <Checkbox label="This is a checkbox" {...register("checkbox")} />
 
       {/* include validation with required or other standard HTML validation rules */}
       <input

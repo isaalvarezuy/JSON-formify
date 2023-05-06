@@ -7,6 +7,7 @@ import NewForm from "./components/NewForm";
 
 function App() {
   return <NewForm />;
+  /* return <Form />; */
 }
 
 export default App;

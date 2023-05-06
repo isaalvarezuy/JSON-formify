@@ -4,6 +4,7 @@ import Input from "./Input";
 import Select from "./Select";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { FieldObj, FormObj } from "./types/types";
+import Checkbox from "./Checkbox";
 
 const NewForm = () => {
   // general type helper that filters and object given a condition
@@ -25,6 +26,13 @@ const NewForm = () => {
         id: "1",
         validations: ["required", "password"],
       },
+      /*   terms: {
+        type: "checkbox",
+        label: "Accept terms & conditions",
+        message: "You will be selling your soul",
+        id: "1",
+        validations: ["required""],
+      }, */
       country: {
         type: "select",
         label: "Country",
@@ -171,6 +179,8 @@ const NewForm = () => {
           {jsonEntries.map(([fieldName, fieldObj]) =>
             renderField({ fieldName, fieldObj, register, errors })
           )}
+
+          <Checkbox label="This is a checkbox" {...register("checkbox")} />
         </div>
       </div>
       <div className="flex flex-row justify-end pr-8 space-x-3 pb-9">
