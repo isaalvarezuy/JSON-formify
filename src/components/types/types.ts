@@ -75,7 +75,24 @@ export type SelectFieldObj = JSONableSelectProps & {
   validations?: Validation[];
   options: SelectOptions;
 };
-export type FieldObj = InputFieldObj | SelectFieldObj;
+
+interface CheckboxProps extends ComponentPropsWithoutRef<"input"> {
+  label: string;
+  message?: string;
+  error?: FormErrorType;
+}
+
+type JSONableCheckboxProps = FilterConditionally<
+  CheckboxProps,
+  JSONValue | undefined
+>;
+
+export type CheckboxFieldObj = JSONableCheckboxProps & {
+  type: "checkbox";
+  validations?: Validation[];
+};
+
+export type FieldObj = InputFieldObj | SelectFieldObj | CheckboxFieldObj;
 
 export type FormObj = {
   title: string;

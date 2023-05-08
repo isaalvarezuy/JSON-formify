@@ -26,13 +26,13 @@ const NewForm = () => {
         id: "1",
         validations: ["required", "password"],
       },
-      /*   terms: {
+      terms: {
         type: "checkbox",
         label: "Accept terms & conditions",
         message: "You will be selling your soul",
         id: "1",
-        validations: ["required""],
-      }, */
+        validations: ["required"],
+      },
       country: {
         type: "select",
         label: "Country",
@@ -84,6 +84,16 @@ const NewForm = () => {
         />
       );
     }
+    if (fieldObj.type === "checkbox") {
+      return (
+        <Checkbox
+          {...fieldObj}
+          id={fieldName}
+          {...register(fieldName)}
+          error={errors[fieldName]?.message}
+        />
+      );
+    }
 
     if (fieldObj.type === "select") {
       return (
@@ -110,10 +120,16 @@ const NewForm = () => {
             const validationMsg =
               typeof fieldVal === "string" ? "" : fieldVal.message;
 
-            if (validationType === "required") {
+            if (validationType === "required" && fieldJson.type === "input") {
               return schema.min(1, {
                 message: validationMsg || "Field is required",
               });
+            }
+            if (
+              validationType === "required" &&
+              fieldJson.type === "checkbox"
+            ) {
+              return schema.boolean();
             }
             if (validationType === "min10") {
               return schema.min(10, {
@@ -164,6 +180,8 @@ const NewForm = () => {
   const submitFrom = (data: any) => {
     console.log(data);
   };
+
+  console.log(errors);
   return (
     <form
       className="flex flex-col justify-between h-full overflow-y-scroll"
@@ -179,8 +197,6 @@ const NewForm = () => {
           {jsonEntries.map(([fieldName, fieldObj]) =>
             renderField({ fieldName, fieldObj, register, errors })
           )}
-
-          <Checkbox label="This is a checkbox" {...register("checkbox")} />
         </div>
       </div>
       <div className="flex flex-row justify-end pr-8 space-x-3 pb-9">
